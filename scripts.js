@@ -11,10 +11,16 @@ const footer = document.querySelector("main footer");
 const description = document.getElementById("description");
 const result = document.getElementById("result");
 
-//Manipulating input to allow only numbers
+//manipulating input
 amount.addEventListener("input", () => {
-  const hasCharactersRegex = /\D+/g;
-  amount.value = amount.value.replace(hasCharactersRegex, "");
+  //replace all commas with dots for decimal separation
+  amount.value = amount.value.replace(/,/g, ".");
+  // regex to remove all characters that are not digits or dots and remove any dot after the first one
+  const hasNotDotCharactersRegex = /[^\d.]|(?<=\..*)\./g;
+  amount.value = amount.value.replace(hasNotDotCharactersRegex, "");
+  //regex to remove anything after the second decimal
+  const afterSecondDecimalRegex = /(?<=\..{2}).*/g;
+  amount.value = amount.value.replace(afterSecondDecimalRegex, "");
 });
 
 //capturing form submit event
